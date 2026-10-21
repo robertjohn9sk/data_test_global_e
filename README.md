@@ -31,7 +31,7 @@ The pipeline rebuilds `data/warehouse/retail_bi.duckdb`, exports target tables t
 
 The Netlify version is a read-only presentation layer over the same CSV outputs produced by the local DuckDB run; it is not a hosted DuckDB server. Open the public site, switch between the four report tabs, and use **Download CSV** to inspect each result. To reproduce or change the model, run `python src/pipeline.py` locally and use the generated DuckDB file; Netlify’s managed database product is Postgres, not DuckDB, so it is intentionally not presented as an equivalent replacement.
 
-The Netlify site is configured by `netlify.toml` with `public/` as its publish directory. If the GitHub repository is connected later, pushes to the production branch can be used for continuous deployment.
+The Netlify site is configured by `netlify.toml` with `public/` as its publish directory. The repository is connected to the assessment site: https://bitestgloabe.netlify.app/. Successful pipeline runs refresh the published CSV copies; pushing the updated files to the production branch triggers deployment.
 
 ## Modelling decisions
 
@@ -56,3 +56,13 @@ Discounts of zero are valid, and null discounts would be treated as zero. Cancel
 ## AI usage declaration
 
 ChatGPT/Codex was used as a senior BI and data-engineering mentor for requirement extraction, schema and quality-rule design, implementation review, query design, and documentation. The prompts asked for a time-boxed, reproducible Python + DuckDB solution and required actual validation rather than unverified claims. Add the final ChatGPT shared-link URL here before hand-in.
+
+## Dashboard and review notes
+
+The public dashboard visualizes all four required reports: monthly revenue, product revenue and share, historical segment/channel revenue, and customer rank. It includes the underlying report tables and CSV downloads. Months with no delivered sales display zero; the seven-row SQL result remains unchanged. KPIs use unrounded fact revenue and display two decimal places.
+
+The supplied prompts align with the assessment. Separate hosting is an optional presentation convenience; no additional hosted database is required. “Production-quality” is interpreted here as a reproducible assessment, not a claim that this small batch pipeline implements production operations. Customer SCD logic supports the observed Premium-to-VIP change; repeated segment reversions and changes to other attributes require a more general change-detection implementation. Q4 intentionally includes delivered customers only; total orders means delivered orders. The source customer ID should be included in grouping if extending to customers with duplicate names.
+
+During this review, ChatGPT/Codex inspected the repository, reran the pipeline, checked standalone SQL results, and added browser charts over the exported data. The workflow was: compare requirements to code, validate actual outputs, then add the smallest dashboard presentation layer. The conversation shared-link field above remains a manual submission step.
+
+Review verification: the pipeline completed successfully with 12 orders, 20 lines and delivered revenue 9994.624060 USD. All four standalone SQL queries matched their CSV outputs (7, 8, 5 and 6 rows). JavaScript syntax and dashboard rendering logic were checked against the actual CSVs. Full browser visual verification and a new screenshot remain pending because the browser binary download failed in this environment.

@@ -4,3 +4,5 @@ __pycache__/
 .DS_Store
 data/warehouse/*.duckdb
 .netlify
+
+data/warehouse/*.wal

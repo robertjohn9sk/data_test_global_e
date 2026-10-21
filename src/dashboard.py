@@ -14,7 +14,7 @@ products = con.sql("SELECT COUNT(DISTINCT product_key) FROM fact_sales WHERE sta
 a, b, c = st.columns(3)
 a.metric("Delivered revenue", f"${total:,.2f}"); b.metric("Delivered orders", orders); c.metric("Products sold", products)
 st.subheader("Monthly revenue trend")
-st.line_chart(con.sql("SELECT date_key AS month, SUM(line_revenue_usd) revenue_usd FROM fact_sales WHERE status='Delivered' GROUP BY 1 ORDER BY 1").df().set_index("month"))
+st.line_chart(con.sql("SELECT DATE_TRUNC('month', date_key) AS month, SUM(line_revenue_usd) revenue_usd FROM fact_sales WHERE status='Delivered' GROUP BY 1 ORDER BY 1").df().set_index("month"))
 st.subheader("Top products")
 st.dataframe(con.sql("SELECT p.product_name, ROUND(SUM(f.line_revenue_usd),2) revenue_usd FROM fact_sales f JOIN dim_product p USING(product_key) WHERE f.status='Delivered' GROUP BY 1 ORDER BY 2 DESC").df(), use_container_width=True)
 con.close()

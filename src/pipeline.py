@@ -1,6 +1,6 @@
 """Build the RetailPro warehouse and execute the four assessment reports."""
 from __future__ import annotations
-import csv, json
+import csv, json, shutil
 from decimal import Decimal, ROUND_HALF_UP
 from pathlib import Path
 import duckdb
@@ -40,6 +40,7 @@ def main():
     orders, lines = flatten(); OUTPUT.mkdir(parents=True, exist_ok=True); REPORTS.mkdir(exist_ok=True); DB.parent.mkdir(exist_ok=True)
     if DB.exists(): DB.unlink()
     con = duckdb.connect(str(DB))
+    con.execute("SET TimeZone = 'UTC'")
     con.execute("CREATE TABLE orders (order_id VARCHAR, order_date TIMESTAMPTZ, status VARCHAR, channel VARCHAR, customer_id VARCHAR, customer_name VARCHAR, customer_segment VARCHAR, region VARCHAR, city VARCHAR, country VARCHAR, rep_id VARCHAR, rep_name VARCHAR, shipping_cost DECIMAL(18,6), currency VARCHAR, payment_method VARCHAR)")
     con.executemany("INSERT INTO orders VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", orders)
     con.execute("CREATE TABLE order_lines (order_id VARCHAR, line_number INTEGER, product_id VARCHAR, product_name VARCHAR, category_raw VARCHAR, category VARCHAR, quantity INTEGER, unit_price DECIMAL(18,6), discount_pct DECIMAL(9,4), currency VARCHAR, fx_rate_to_usd DECIMAL(9,4), line_revenue_local DECIMAL(18,6), line_revenue_usd DECIMAL(18,6))")
@@ -58,5 +59,11 @@ def main():
     assert str(delivered) == "9994.624060", delivered
     print(f"validated orders={len(orders)} lines={len(lines)} delivered_revenue_usd={delivered}")
     con.close()
+    # Keep the deployed presentation layer synchronized with this successful run.
+    public_data = ROOT / "public/data"
+    public_data.mkdir(parents=True, exist_ok=True)
+    for name in ("orders.csv", "fact_sales.csv"):
+        shutil.copy2(OUTPUT / name, public_data / name)
+    shutil.copytree(REPORTS, public_data / "reports", dirs_exist_ok=True)
 
 if __name__ == "__main__": main()
