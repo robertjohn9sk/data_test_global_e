@@ -117,3 +117,11 @@ Use the website's **Pipeline** tab for source files, requirements, cleaning and 
 python src/pipeline.py
 python src/validate.py
 ```
+
+## Execution images
+
+These images render actual successful command output from the assessment review environment; they are not desktop screenshots.
+
+![Pipeline execution](docs/duck1.png)
+
+![Validation execution](docs/duck2.png)

@@ -58,6 +58,7 @@ def main():
     delivered = con.sql("SELECT ROUND(SUM(line_revenue_usd),6) FROM fact_sales WHERE status='Delivered'").fetchone()[0]
     assert str(delivered) == "9994.624060", delivered
     print(f"validated orders={len(orders)} lines={len(lines)} delivered_revenue_usd={delivered}")
+    con.execute("CHECKPOINT")
     con.close()
     # Keep the deployed presentation layer synchronized with this successful run.
     public_data = ROOT / "public/data"
