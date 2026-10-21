@@ -169,3 +169,7 @@ The candidate asked to add their name and the title Global-e Data Check to the p
 **Assistant work — summary**
 
 Added GPT Chat as the fifth main navigation view. It presents 15 selected instruction excerpts in conversation order, identifies omissions from longer messages, links to this record, and distinguishes the earlier candidate-provided Codex handoff from a retrieved transcript. The tab uses the existing generic view-switching script. Navigation target presence was checked; a full browser visual check was not performed.
+
+## 11. Guided data Q&A
+
+The candidate requested a right-side Chat with your data button with 10 pre-created questions and answers, without a real chatbot. Added a modal with preset dataset answers, source references, keyboard dismissal and return focus. The interface identifies the fixed dataset snapshot and requires answer refresh if data changes. Answers cover totals, order statuses, average order value, top month/product/customer, segment/channel, Sarah history, and revenue/FX rules. No model API or free-text submission is used.
