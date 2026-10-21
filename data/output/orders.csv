@@ -1,0 +1,13 @@
+order_id,order_date,status,channel,customer_id,customer_name,customer_segment,region,city,country,rep_id,rep_name,shipping_cost,currency,payment_method
+ORD-2024-001,2024-01-05 11:14:22+02,Delivered,Online,CUST-1042,Sarah Mitchell,Premium,North,New York,US,REP-07,James Holt,9.990000,USD,Credit Card
+ORD-2024-002,2024-01-08 16:30:00+02,Delivered,In-Store,CUST-2187,Daniel Rosenthal,Business,South,Miami,US,REP-12,Lisa Chen,0.000000,USD,Bank Transfer
+ORD-2024-003,2024-02-12 13:05:44+02,Returned,Online,CUST-0893,Priya Nair,Standard,West,San Francisco,US,REP-07,James Holt,4.990000,USD,PayPal
+ORD-2024-004,2024-02-20 18:45:10+02,Delivered,Online,CUST-1042,Sarah Mitchell,Premium,North,New York,US,REP-07,James Holt,9.990000,USD,Credit Card
+ORD-2024-005,2024-03-03 10:20:00+02,Delivered,Partner,CUST-3301,Marco Ferrari,Business,International,Rome,IT,REP-21,Anna Kowalski,49.990000,EUR,Wire Transfer
+ORD-2024-006,2024-03-14 12:00:00+02,Delivered,Online,CUST-4455,Rachel Green,Standard,East,Boston,US,REP-07,James Holt,4.990000,USD,Credit Card
+ORD-2024-007,2024-04-01 18:33:00+03,Cancelled,Online,CUST-5512,Tom Bradley,Standard,West,Phoenix,US,REP-07,James Holt,0.000000,USD,Credit Card
+ORD-2024-008,2024-04-18 12:00:00+03,Delivered,In-Store,CUST-6671,Nina Patel,Business,South,Houston,US,REP-12,Lisa Chen,0.000000,USD,Purchase Order
+ORD-2024-009,2024-05-22 16:15:00+03,Delivered,Online,CUST-7780,Lena Hoffmann,Premium,International,Berlin,DE,REP-21,Anna Kowalski,19.990000,EUR,Credit Card
+ORD-2024-010,2024-07-09 14:45:00+03,Delivered,Partner,CUST-2187,Daniel Rosenthal,Business,South,Miami,US,REP-12,Lisa Chen,0.000000,USD,Bank Transfer
+ORD-2024-011,2024-09-30 20:00:00+03,Processing,Online,CUST-8891,Carlos Vega,Standard,West,Los Angeles,US,REP-07,James Holt,7.990000,USD,PayPal
+ORD-2024-012,2024-11-15 10:55:00+02,Delivered,In-Store,CUST-1042,Sarah Mitchell,VIP,North,New York,US,REP-12,Lisa Chen,0.000000,USD,Credit Card

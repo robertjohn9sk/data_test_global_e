@@ -1,0 +1,11 @@
+customer_key,customer_id,customer_name,customer_segment,region,city,country,effective_from,effective_to,is_current
+5,CUST-3301,Marco Ferrari,Business,International,Rome,IT,2024-03-03,9999-12-31,true
+4,CUST-2187,Daniel Rosenthal,Business,South,Miami,US,2024-01-08,9999-12-31,true
+7,CUST-5512,Tom Bradley,Standard,West,Phoenix,US,2024-04-01,9999-12-31,true
+6,CUST-4455,Rachel Green,Standard,East,Boston,US,2024-03-14,9999-12-31,true
+1,CUST-0893,Priya Nair,Standard,West,San Francisco,US,2024-02-12,9999-12-31,true
+9,CUST-7780,Lena Hoffmann,Premium,International,Berlin,DE,2024-05-22,9999-12-31,true
+10,CUST-8891,Carlos Vega,Standard,West,Los Angeles,US,2024-09-30,9999-12-31,true
+2,CUST-1042,Sarah Mitchell,Premium,North,New York,US,2024-01-05,2024-11-15,false
+3,CUST-1042,Sarah Mitchell,VIP,North,New York,US,2024-11-15,9999-12-31,true
+8,CUST-6671,Nina Patel,Business,South,Houston,US,2024-04-18,9999-12-31,true

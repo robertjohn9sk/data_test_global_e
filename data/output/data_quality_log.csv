@@ -1,0 +1,4 @@
+issue_id,records,issue,decision
+DQ-001,ORD-2024-006 / PROD-416,Category casing differs,Canonicalized to Home Appliances; raw value retained.
+DQ-002,PROD-207 and PROD-214,Product categories vary by order,Mapped Sports and Sports & Fitness to Sports & Fitness.
+DQ-003,ORD-2024-009 / PROD-207,Materially different supplied price,Flagged for review; retained supplied EUR price.

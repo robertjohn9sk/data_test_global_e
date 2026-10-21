@@ -1,0 +1,21 @@
+order_id,line_number,product_id,product_name,category_raw,category,quantity,unit_price,discount_pct,currency,fx_rate_to_usd,line_revenue_local,line_revenue_usd
+ORD-2024-001,1,PROD-501,Wireless Headphones Pro,Electronics,Electronics,2,149.990000,10.0000,USD,1.0000,269.982000,269.982000
+ORD-2024-001,2,PROD-318,USB-C Charging Hub,Electronics,Electronics,1,49.990000,0.0000,USD,1.0000,49.990000,49.990000
+ORD-2024-002,1,PROD-102,Office Chair Ergonomic,Furniture,Furniture,4,299.990000,15.0000,USD,1.0000,1019.966000,1019.966000
+ORD-2024-003,1,PROD-207,Yoga Mat Premium,Sports & Fitness,Sports & Fitness,1,59.990000,5.0000,USD,1.0000,56.990500,56.990500
+ORD-2024-003,2,PROD-214,Resistance Bands Set,Sports & Fitness,Sports & Fitness,2,24.990000,5.0000,USD,1.0000,47.481000,47.481000
+ORD-2024-004,1,PROD-620,Smart Watch Series 5,Electronics,Electronics,1,399.990000,0.0000,USD,1.0000,399.990000,399.990000
+ORD-2024-005,1,PROD-501,Wireless Headphones Pro,Electronics,Electronics,10,149.990000,20.0000,EUR,1.0800,1199.920000,1295.913600
+ORD-2024-005,2,PROD-620,Smart Watch Series 5,Electronics,Electronics,5,399.990000,25.0000,EUR,1.0800,1499.962500,1619.959500
+ORD-2024-006,1,PROD-415,Coffee Maker Deluxe,Home Appliances,Home Appliances,1,89.990000,0.0000,USD,1.0000,89.990000,89.990000
+ORD-2024-006,2,PROD-416,Coffee Grinder Pro,home appliances,Home Appliances,1,44.990000,10.0000,USD,1.0000,40.491000,40.491000
+ORD-2024-007,1,PROD-102,Office Chair Ergonomic,Furniture,Furniture,2,299.990000,0.0000,USD,1.0000,599.980000,599.980000
+ORD-2024-008,1,PROD-102,Office Chair Ergonomic,Furniture,Furniture,6,299.990000,20.0000,USD,1.0000,1439.952000,1439.952000
+ORD-2024-008,2,PROD-318,USB-C Charging Hub,Electronics,Electronics,6,49.990000,10.0000,USD,1.0000,269.946000,269.946000
+ORD-2024-009,1,PROD-620,Smart Watch Series 5,Electronics,Electronics,2,399.990000,5.0000,EUR,1.0800,759.981000,820.779480
+ORD-2024-009,2,PROD-207,Yoga Mat Premium,Sports,Sports & Fitness,2,149.990000,5.0000,EUR,1.0800,284.981000,307.779480
+ORD-2024-010,1,PROD-102,Office Chair Ergonomic,Furniture,Furniture,10,299.990000,25.0000,USD,1.0000,2249.925000,2249.925000
+ORD-2024-011,1,PROD-207,Yoga Mat Premium,Sports,Sports & Fitness,1,59.990000,0.0000,USD,1.0000,59.990000,59.990000
+ORD-2024-011,2,PROD-415,Coffee Maker Deluxe,Home Appliances,Home Appliances,1,89.990000,0.0000,USD,1.0000,89.990000,89.990000
+ORD-2024-012,1,PROD-416,Coffee Grinder Pro,Home Appliances,Home Appliances,1,44.990000,0.0000,USD,1.0000,44.990000,44.990000
+ORD-2024-012,2,PROD-214,Resistance Bands Set,Sports,Sports & Fitness,3,24.990000,0.0000,USD,1.0000,74.970000,74.970000
