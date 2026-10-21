@@ -95,6 +95,8 @@ The [online dashboard](https://bitestgloabe.netlify.app/) is a read-only page ov
 
 ## AI usage
 
+[Read the assessment conversation record](docs/chat_record.md). This is a reconstructed prompt and work log, not a full verbatim chat export.
+
 I used **Codex and ChatGPT** for project setup, Python and SQL implementation support, review, documentation, and the dashboard. I supplied the processing walkthrough and SQL logic in the conversation and asked the tools to explain and present them. Useful prompts required reading the full assessment first, keeping the source unchanged, using a simple Python + DuckDB solution, and verifying outputs by executing the code.
 
 The pipeline, four SQL comparisons, JavaScript syntax, dashboard rendering logic, and view-switching logic were checked. Full browser visual verification and a new screenshot remain outstanding. The customer history implementation covers the observed segment change; more general attribute changes and repeated segment reversions need additional handling.
