@@ -135,3 +135,27 @@ Created this repository record and linked it from the README. Clearly identified
 - Add a Codex session link/export if available.
 - Verify the updated Netlify publication.
 - Complete full browser visual verification and capture a new dashboard screenshot.
+
+## 7. Pipeline walkthrough tab
+
+**Candidate request — quotation**
+
+> add another tab that has 3 minitabs. the main is pipeline, the first subtab is the json file and the word add as requirements how to use the the files and what to do. 2cond subtab is to show the process of cleaning and third subtab is the logic to how we created the prepared or gold layer to show the data in dashbaord in metrics - update also the chat with this
+
+**Assistant work — summary**
+
+Added a Pipeline view with Source & requirements, Cleaning, and Gold layer & metrics subtabs. Included the supplied assessment Word document for download, an unchanged copy of the repository JSON for download and inline inspection, execution instructions, actual cleaning rules and affected records, dimensional joins, and metric calculations. Described gold as a logical reporting stage of the existing DuckDB pipeline, not a new storage service. Updated navigation to switch main views and nested stages independently. This update changes documentation and navigation, not ETL or reporting SQL. JavaScript navigation and HTML/source consistency checks were run; full browser visual verification remains outstanding.
+
+## 8. Test cases and pipeline schema
+
+**Candidate request — summary**
+
+Add a fourth tab showing test cases for JSON extraction, data consistency and assignment logic; update the chat record and create a GitHub schema explaining the pipeline.
+
+**Assistant work — summary**
+
+Added Tests as the fourth main view. Created src/validate.py and executed it successfully after rebuilding the pipeline: 75 checks passed. The checks compare source attributes and independently calculated line revenue with DuckDB, verify row counts/keys, dimension references, observed customer history, category rules, status handling, standalone SQL outputs and public CSV consistency. Saved results in docs/validation_results.json. Added a Mermaid workflow diagram in docs/pipeline_architecture.md. Clarified that source correctness in the real world, synthetic NULL cases, general incremental behavior and browser visual verification are not established by these checks.
+
+## 9. Project title and author
+
+The candidate asked to add their name and the title Global-e Data Check to the project and page. Updated the page heading, browser title and README to Global-e Data Check, with Robert Grosu as the candidate name based on the supplied project context.

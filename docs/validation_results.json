@@ -1,0 +1,307 @@
+{
+  "passed": 75,
+  "failed": 0,
+  "scope": "Supplied assessment dataset; not a general input-validation test suite.",
+  "tests": [
+    {
+      "test": "Metadata matches actual source orders",
+      "passed": true
+    },
+    {
+      "test": "Order IDs are unique",
+      "passed": true
+    },
+    {
+      "test": "All source orders loaded",
+      "passed": true
+    },
+    {
+      "test": "All source lines loaded without join loss or multiplication",
+      "passed": true
+    },
+    {
+      "test": "Fact natural key is unique",
+      "passed": true
+    },
+    {
+      "test": "Order attributes: ORD-2024-001",
+      "passed": true
+    },
+    {
+      "test": "Source line and independent revenue calculation: ORD-2024-001/1",
+      "passed": true
+    },
+    {
+      "test": "Fact revenue preserved: ORD-2024-001/1",
+      "passed": true
+    },
+    {
+      "test": "Source line and independent revenue calculation: ORD-2024-001/2",
+      "passed": true
+    },
+    {
+      "test": "Fact revenue preserved: ORD-2024-001/2",
+      "passed": true
+    },
+    {
+      "test": "Order attributes: ORD-2024-002",
+      "passed": true
+    },
+    {
+      "test": "Source line and independent revenue calculation: ORD-2024-002/1",
+      "passed": true
+    },
+    {
+      "test": "Fact revenue preserved: ORD-2024-002/1",
+      "passed": true
+    },
+    {
+      "test": "Order attributes: ORD-2024-003",
+      "passed": true
+    },
+    {
+      "test": "Source line and independent revenue calculation: ORD-2024-003/1",
+      "passed": true
+    },
+    {
+      "test": "Fact revenue preserved: ORD-2024-003/1",
+      "passed": true
+    },
+    {
+      "test": "Source line and independent revenue calculation: ORD-2024-003/2",
+      "passed": true
+    },
+    {
+      "test": "Fact revenue preserved: ORD-2024-003/2",
+      "passed": true
+    },
+    {
+      "test": "Order attributes: ORD-2024-004",
+      "passed": true
+    },
+    {
+      "test": "Source line and independent revenue calculation: ORD-2024-004/1",
+      "passed": true
+    },
+    {
+      "test": "Fact revenue preserved: ORD-2024-004/1",
+      "passed": true
+    },
+    {
+      "test": "Order attributes: ORD-2024-005",
+      "passed": true
+    },
+    {
+      "test": "Source line and independent revenue calculation: ORD-2024-005/1",
+      "passed": true
+    },
+    {
+      "test": "Fact revenue preserved: ORD-2024-005/1",
+      "passed": true
+    },
+    {
+      "test": "Source line and independent revenue calculation: ORD-2024-005/2",
+      "passed": true
+    },
+    {
+      "test": "Fact revenue preserved: ORD-2024-005/2",
+      "passed": true
+    },
+    {
+      "test": "Order attributes: ORD-2024-006",
+      "passed": true
+    },
+    {
+      "test": "Source line and independent revenue calculation: ORD-2024-006/1",
+      "passed": true
+    },
+    {
+      "test": "Fact revenue preserved: ORD-2024-006/1",
+      "passed": true
+    },
+    {
+      "test": "Source line and independent revenue calculation: ORD-2024-006/2",
+      "passed": true
+    },
+    {
+      "test": "Fact revenue preserved: ORD-2024-006/2",
+      "passed": true
+    },
+    {
+      "test": "Order attributes: ORD-2024-007",
+      "passed": true
+    },
+    {
+      "test": "Source line and independent revenue calculation: ORD-2024-007/1",
+      "passed": true
+    },
+    {
+      "test": "Fact revenue preserved: ORD-2024-007/1",
+      "passed": true
+    },
+    {
+      "test": "Order attributes: ORD-2024-008",
+      "passed": true
+    },
+    {
+      "test": "Source line and independent revenue calculation: ORD-2024-008/1",
+      "passed": true
+    },
+    {
+      "test": "Fact revenue preserved: ORD-2024-008/1",
+      "passed": true
+    },
+    {
+      "test": "Source line and independent revenue calculation: ORD-2024-008/2",
+      "passed": true
+    },
+    {
+      "test": "Fact revenue preserved: ORD-2024-008/2",
+      "passed": true
+    },
+    {
+      "test": "Order attributes: ORD-2024-009",
+      "passed": true
+    },
+    {
+      "test": "Source line and independent revenue calculation: ORD-2024-009/1",
+      "passed": true
+    },
+    {
+      "test": "Fact revenue preserved: ORD-2024-009/1",
+      "passed": true
+    },
+    {
+      "test": "Source line and independent revenue calculation: ORD-2024-009/2",
+      "passed": true
+    },
+    {
+      "test": "Fact revenue preserved: ORD-2024-009/2",
+      "passed": true
+    },
+    {
+      "test": "Order attributes: ORD-2024-010",
+      "passed": true
+    },
+    {
+      "test": "Source line and independent revenue calculation: ORD-2024-010/1",
+      "passed": true
+    },
+    {
+      "test": "Fact revenue preserved: ORD-2024-010/1",
+      "passed": true
+    },
+    {
+      "test": "Order attributes: ORD-2024-011",
+      "passed": true
+    },
+    {
+      "test": "Source line and independent revenue calculation: ORD-2024-011/1",
+      "passed": true
+    },
+    {
+      "test": "Fact revenue preserved: ORD-2024-011/1",
+      "passed": true
+    },
+    {
+      "test": "Source line and independent revenue calculation: ORD-2024-011/2",
+      "passed": true
+    },
+    {
+      "test": "Fact revenue preserved: ORD-2024-011/2",
+      "passed": true
+    },
+    {
+      "test": "Order attributes: ORD-2024-012",
+      "passed": true
+    },
+    {
+      "test": "Source line and independent revenue calculation: ORD-2024-012/1",
+      "passed": true
+    },
+    {
+      "test": "Fact revenue preserved: ORD-2024-012/1",
+      "passed": true
+    },
+    {
+      "test": "Source line and independent revenue calculation: ORD-2024-012/2",
+      "passed": true
+    },
+    {
+      "test": "Fact revenue preserved: ORD-2024-012/2",
+      "passed": true
+    },
+    {
+      "test": "Delivered source total equals fact total and required checkpoint",
+      "passed": true
+    },
+    {
+      "test": "All non-delivered rows retained",
+      "passed": true
+    },
+    {
+      "test": "No missing dimension references",
+      "passed": true
+    },
+    {
+      "test": "Sarah historical versions mapped correctly",
+      "passed": true
+    },
+    {
+      "test": "Category casing normalized",
+      "passed": true
+    },
+    {
+      "test": "Sports categories normalized",
+      "passed": true
+    },
+    {
+      "test": "Flagged price retained",
+      "passed": true
+    },
+    {
+      "test": "Standalone SQL matches CSV: q1_monthly_revenue.csv",
+      "passed": true
+    },
+    {
+      "test": "Standalone SQL matches CSV: q2_top_products.csv",
+      "passed": true
+    },
+    {
+      "test": "Standalone SQL matches CSV: q3_segment_channel.csv",
+      "passed": true
+    },
+    {
+      "test": "Standalone SQL matches CSV: q4_customer_rank.csv",
+      "passed": true
+    },
+    {
+      "test": "Website export matches warehouse export: orders.csv",
+      "passed": true
+    },
+    {
+      "test": "Website export matches warehouse export: fact_sales.csv",
+      "passed": true
+    },
+    {
+      "test": "Website export matches warehouse export: q2_top_products.csv",
+      "passed": true
+    },
+    {
+      "test": "Website export matches warehouse export: q3_segment_channel.csv",
+      "passed": true
+    },
+    {
+      "test": "Website export matches warehouse export: q1_monthly_revenue.csv",
+      "passed": true
+    },
+    {
+      "test": "Website export matches warehouse export: q4_customer_rank.csv",
+      "passed": true
+    },
+    {
+      "test": "Raw source unchanged during validation",
+      "passed": true
+    }
+  ]
+}

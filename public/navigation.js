@@ -1,12 +1,15 @@
-document.querySelectorAll('[data-view]').forEach(button => {
- button.addEventListener('click', () => {
-  const selected = button.dataset.view;
-  document.querySelectorAll('[data-view]').forEach(item => {
-   const active = item.dataset.view === selected;
+function connectViews(buttonSelector, panelSuffix) {
+ const buttons = document.querySelectorAll(buttonSelector);
+ const attribute = panelSuffix === 'view' ? 'view' : 'stage';
+ buttons.forEach(button => button.addEventListener('click', () => {
+  const selected = button.dataset[attribute];
+  buttons.forEach(item => {
+   const active = item.dataset[attribute] === selected;
    item.classList.toggle('active', active);
    item.setAttribute('aria-pressed', String(active));
+   document.getElementById(item.dataset[attribute] + '-' + panelSuffix).hidden = !active;
   });
-  document.querySelector('#dashboard-view').hidden = selected !== 'dashboard';
-  document.querySelector('#explanation-view').hidden = selected !== 'explanation';
- });
-});
+ }));
+}
+connectViews('[data-view]', 'view');
+connectViews('[data-stage]', 'stage');

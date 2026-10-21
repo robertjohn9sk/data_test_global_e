@@ -2,13 +2,13 @@
 <html lang="en">
 <head>
   <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>RetailPro BI Assessment</title>
+  <title>Global-e Data Check | Robert Grosu</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <main class="shell">
-    <header><p class="eyebrow">RetailPro ERP • Online assessment demo</p><h1>Retail sales overview</h1><p class="muted">2024 sales performance · Delivered orders only · All amounts in USD</p></header>
-<nav class="view-nav" aria-label="Project views"><button type="button" class="active" data-view="dashboard" aria-pressed="true">Dashboard</button><button type="button" data-view="explanation" aria-pressed="false">Explanation</button></nav><div id="dashboard-view">    <section class="metrics" id="metrics"><div class="card"><span>Delivered revenue</span><strong>Loading…</strong></div><div class="card"><span>Delivered orders</span><strong>Loading…</strong></div><div class="card"><span>Fact rows</span><strong>Loading…</strong></div></section>
+    <header><p class="eyebrow">RetailPro ERP • Online assessment demo</p><h1>Global-e Data Check</h1><p class="muted"><strong>Robert Grosu</strong> · BI Developer Technical Assessment</p><p class="muted">2024 sales performance · Delivered orders only · All amounts in USD</p></header>
+<nav class="view-nav" aria-label="Project views"><button type="button" class="active" data-view="dashboard" aria-pressed="true">Dashboard</button><button type="button" data-view="explanation" aria-pressed="false">Explanation</button><button type="button" data-view="pipeline" aria-pressed="false">Pipeline</button><button type="button" data-view="tests" aria-pressed="false">Tests</button></nav><div id="dashboard-view">    <section class="metrics" id="metrics"><div class="card"><span>Delivered revenue</span><strong>Loading…</strong></div><div class="card"><span>Delivered orders</span><strong>Loading…</strong></div><div class="card"><span>Fact rows</span><strong>Loading…</strong></div></section>
 <p id="order-summary" class="muted"></p><p id="dashboard-error" role="alert"></p>
     <section class="dashboard-grid" aria-label="Sales dashboard">
       <article class="panel wide"><p class="eyebrow">Q1 · Revenue over time</p><h2>Monthly revenue</h2><p class="muted">January–December 2024. Months without delivered sales show zero.</p><div id="monthly-chart"></div></article>
@@ -40,6 +40,350 @@ SELECT c.customer_name, COUNT(DISTINCT f.order_id) AS total_orders,
        RANK() OVER (ORDER BY SUM(f.line_revenue_usd) DESC) AS revenue_rank
 FROM fact_sales f JOIN dim_customer c USING (customer_key)
 WHERE f.status = &#x27;Delivered&#x27;
-GROUP BY c.customer_name ORDER BY revenue_rank;</code></pre><p>COUNT(DISTINCT order_id) prevents multi-line orders being counted repeatedly. RANK orders customers by unrounded revenue; ties share a rank and may leave gaps.</p><h2>Scope and reproducibility</h2><p>Run <code>python src/pipeline.py</code> to rebuild the warehouse and outputs. The supplied data produces 12 orders, 20 line items and 9 delivered orders. Delivered revenue is 9,994.624060 USD; the dashboard displays $9,994.62. The website reads exported CSV files; it does not execute SQL in a hosted database.</p><p>Customer history currently handles the observed segment change; repeated segment reversions and changes to other attributes need more general change detection. Q4 groups by customer name and includes delivered customers only; use customer_id as well when extending to duplicate names. Incremental loading is discussed in the README; this implementation rebuilds the small dataset.</p></section>    <footer><span>Source of truth: local DuckDB warehouse</span><a href="https://github.com/robertjohn9sk/data_test_global_e">Repository</a></footer>
+GROUP BY c.customer_name ORDER BY revenue_rank;</code></pre><p>COUNT(DISTINCT order_id) prevents multi-line orders being counted repeatedly. RANK orders customers by unrounded revenue; ties share a rank and may leave gaps.</p><h2>Scope and reproducibility</h2><p>Run <code>python src/pipeline.py</code> to rebuild the warehouse and outputs. The supplied data produces 12 orders, 20 line items and 9 delivered orders. Delivered revenue is 9,994.624060 USD; the dashboard displays $9,994.62. The website reads exported CSV files; it does not execute SQL in a hosted database.</p><p>Customer history currently handles the observed segment change; repeated segment reversions and changes to other attributes need more general change detection. Q4 groups by customer name and includes delivered customers only; use customer_id as well when extending to duplicate names. Incremental loading is discussed in the README; this implementation rebuilds the small dataset.</p></section><section id="pipeline-view" hidden class="explanation panel">
+<p class="eyebrow">From source to dashboard</p><h2>Pipeline</h2>
+<p>Follow the source files through cleaning and preparation to the dashboard metrics. These are logical stages of the existing Python and DuckDB pipeline, not separate production services.</p>
+<nav class="view-nav" aria-label="Pipeline stages"><button type="button" class="active" data-stage="source" aria-pressed="true">1. Source &amp; requirements</button><button type="button" data-stage="cleaning" aria-pressed="false">2. Cleaning</button><button type="button" data-stage="gold" aria-pressed="false">3. Gold layer &amp; metrics</button></nav>
+<div id="source-stage"><h3>Start with the supplied files</h3>
+<p><a href="files/assessment.docx" download>Download the assessment Word document</a> · <a href="files/orders_raw.json" download>Download the unchanged source JSON</a></p>
+<p>The Word document defines the requirements; the JSON contains the retail ERP data. Read the Word document first, then inspect the JSON metadata, customer objects and nested line_items. The supplied data attachment was a Word document containing JSON text; the repository keeps the extracted JSON as the pipeline input.</p>
+<h3>What to deliver</h3><ol><li>Extract all orders and lines into orders and order_lines. Calculate local and USD revenue and retain the currency and rate.</li><li>Document at least two real data quality issues with affected records and handling decisions.</li><li>Design a line-item fact_sales table and Customer, Product and Date dimensions. Include a PK/FK diagram.</li><li>Explain customer history and incremental loading in the README.</li><li>Execute four reports: monthly revenue, product share, segment/channel revenue and customer rank. Show them in a dashboard.</li><li>Submit the source, code, populated tables, quality log, diagram, queries and AI usage declaration through GitHub or Drive.</li></ol>
+<h3>How to use the files</h3><p>Keep data/raw/orders_raw.json unchanged. The Word file is reference documentation, not an executable input. From the repository root, install the requirements and run:</p><pre><code>python -m pip install -r requirements.txt
+python src/pipeline.py
+streamlit run src/dashboard.py</code></pre>
+<p>The pipeline validates 12 orders and 20 lines for this assessment dataset. To support a different dataset, replace the fixed assessment assertions with appropriate source-driven checks.</p>
+<details><summary>View the source JSON</summary><pre><code>{
+
+  "export_metadata": {
+
+    "source_system": "RetailPro ERP",
+
+    "export_date": "2024-12-31",
+
+    "record_count": 12
+
+  },
+
+  "orders": [
+
+    {
+
+      "order_id": "ORD-2024-001",
+
+      "order_date": "2024-01-05T09:14:22Z",
+
+      "status": "Delivered",
+
+      "channel": "Online",
+
+      "customer": { "customer_id": "CUST-1042", "full_name": "Sarah Mitchell", "segment": "Premium", "region": "North", "city": "New York", "country": "US" },
+
+      "sales_rep": { "rep_id": "REP-07", "name": "James Holt" },
+
+      "line_items": [
+
+        { "product_id": "PROD-501", "product_name": "Wireless Headphones Pro", "category": "Electronics", "quantity": 2, "unit_price": 149.99, "discount_pct": 10 },
+
+        { "product_id": "PROD-318", "product_name": "USB-C Charging Hub",      "category": "Electronics", "quantity": 1, "unit_price": 49.99,  "discount_pct": 0  }
+
+      ],
+
+      "shipping_cost": 9.99, "currency": "USD", "payment_method": "Credit Card"
+
+    },
+
+    {
+
+      "order_id": "ORD-2024-002",
+
+      "order_date": "2024-01-08T14:30:00Z",
+
+      "status": "Delivered",
+
+      "channel": "In-Store",
+
+      "customer": { "customer_id": "CUST-2187", "full_name": "Daniel Rosenthal", "segment": "Business", "region": "South", "city": "Miami", "country": "US" },
+
+      "sales_rep": { "rep_id": "REP-12", "name": "Lisa Chen" },
+
+      "line_items": [
+
+        { "product_id": "PROD-102", "product_name": "Office Chair Ergonomic", "category": "Furniture", "quantity": 4, "unit_price": 299.99, "discount_pct": 15 }
+
+      ],
+
+      "shipping_cost": 0, "currency": "USD", "payment_method": "Bank Transfer"
+
+    },
+
+    {
+
+      "order_id": "ORD-2024-003",
+
+      "order_date": "2024-02-12T11:05:44Z",
+
+      "status": "Returned",
+
+      "channel": "Online",
+
+      "customer": { "customer_id": "CUST-0893", "full_name": "Priya Nair", "segment": "Standard", "region": "West", "city": "San Francisco", "country": "US" },
+
+      "sales_rep": { "rep_id": "REP-07", "name": "James Holt" },
+
+      "line_items": [
+
+        { "product_id": "PROD-207", "product_name": "Yoga Mat Premium",     "category": "Sports &amp; Fitness", "quantity": 1, "unit_price": 59.99, "discount_pct": 5 },
+
+        { "product_id": "PROD-214", "product_name": "Resistance Bands Set", "category": "Sports &amp; Fitness", "quantity": 2, "unit_price": 24.99, "discount_pct": 5 }
+
+      ],
+
+      "shipping_cost": 4.99, "currency": "USD", "payment_method": "PayPal"
+
+    },
+
+    {
+
+      "order_id": "ORD-2024-004",
+
+      "order_date": "2024-02-20T16:45:10Z",
+
+      "status": "Delivered",
+
+      "channel": "Online",
+
+      "customer": { "customer_id": "CUST-1042", "full_name": "Sarah Mitchell", "segment": "Premium", "region": "North", "city": "New York", "country": "US" },
+
+      "sales_rep": { "rep_id": "REP-07", "name": "James Holt" },
+
+      "line_items": [
+
+        { "product_id": "PROD-620", "product_name": "Smart Watch Series 5", "category": "Electronics", "quantity": 1, "unit_price": 399.99, "discount_pct": 0 }
+
+      ],
+
+      "shipping_cost": 9.99, "currency": "USD", "payment_method": "Credit Card"
+
+    },
+
+    {
+
+      "order_id": "ORD-2024-005",
+
+      "order_date": "2024-03-03T08:20:00Z",
+
+      "status": "Delivered",
+
+      "channel": "Partner",
+
+      "customer": { "customer_id": "CUST-3301", "full_name": "Marco Ferrari", "segment": "Business", "region": "International", "city": "Rome", "country": "IT" },
+
+      "sales_rep": { "rep_id": "REP-21", "name": "Anna Kowalski" },
+
+      "line_items": [
+
+        { "product_id": "PROD-501", "product_name": "Wireless Headphones Pro", "category": "Electronics", "quantity": 10, "unit_price": 149.99, "discount_pct": 20 },
+
+        { "product_id": "PROD-620", "product_name": "Smart Watch Series 5",   "category": "Electronics", "quantity": 5,  "unit_price": 399.99, "discount_pct": 25 }
+
+      ],
+
+      "shipping_cost": 49.99, "currency": "EUR", "payment_method": "Wire Transfer"
+
+    },
+
+    {
+
+      "order_id": "ORD-2024-006",
+
+      "order_date": "2024-03-14T10:00:00Z",
+
+      "status": "Delivered",
+
+      "channel": "Online",
+
+      "customer": { "customer_id": "CUST-4455", "full_name": "Rachel Green", "segment": "Standard", "region": "East", "city": "Boston", "country": "US" },
+
+      "sales_rep": { "rep_id": "REP-07", "name": "James Holt" },
+
+      "line_items": [
+
+        { "product_id": "PROD-415", "product_name": "Coffee Maker Deluxe", "category": "Home Appliances", "quantity": 1, "unit_price": 89.99, "discount_pct": 0  },
+
+        { "product_id": "PROD-416", "product_name": "Coffee Grinder Pro",   "category": "home appliances", "quantity": 1, "unit_price": 44.99, "discount_pct": 10 }
+
+      ],
+
+      "shipping_cost": 4.99, "currency": "USD", "payment_method": "Credit Card"
+
+    },
+
+    {
+
+      "order_id": "ORD-2024-007",
+
+      "order_date": "2024-04-01T15:33:00Z",
+
+      "status": "Cancelled",
+
+      "channel": "Online",
+
+      "customer": { "customer_id": "CUST-5512", "full_name": "Tom Bradley", "segment": "Standard", "region": "West", "city": "Phoenix", "country": "US" },
+
+      "sales_rep": { "rep_id": "REP-07", "name": "James Holt" },
+
+      "line_items": [
+
+        { "product_id": "PROD-102", "product_name": "Office Chair Ergonomic", "category": "Furniture", "quantity": 2, "unit_price": 299.99, "discount_pct": 0 }
+
+      ],
+
+      "shipping_cost": 0, "currency": "USD", "payment_method": "Credit Card"
+
+    },
+
+    {
+
+      "order_id": "ORD-2024-008",
+
+      "order_date": "2024-04-18T09:00:00Z",
+
+      "status": "Delivered",
+
+      "channel": "In-Store",
+
+      "customer": { "customer_id": "CUST-6671", "full_name": "Nina Patel", "segment": "Business", "region": "South", "city": "Houston", "country": "US" },
+
+      "sales_rep": { "rep_id": "REP-12", "name": "Lisa Chen" },
+
+      "line_items": [
+
+        { "product_id": "PROD-102", "product_name": "Office Chair Ergonomic", "category": "Furniture",    "quantity": 6, "unit_price": 299.99, "discount_pct": 20 },
+
+        { "product_id": "PROD-318", "product_name": "USB-C Charging Hub",     "category": "Electronics", "quantity": 6, "unit_price": 49.99,  "discount_pct": 10 }
+
+      ],
+
+      "shipping_cost": 0, "currency": "USD", "payment_method": "Purchase Order"
+
+    },
+
+    {
+
+      "order_id": "ORD-2024-009",
+
+      "order_date": "2024-05-22T13:15:00Z",
+
+      "status": "Delivered",
+
+      "channel": "Online",
+
+      "customer": { "customer_id": "CUST-7780", "full_name": "Lena Hoffmann", "segment": "Premium", "region": "International", "city": "Berlin", "country": "DE" },
+
+      "sales_rep": { "rep_id": "REP-21", "name": "Anna Kowalski" },
+
+      "line_items": [
+
+        { "product_id": "PROD-620", "product_name": "Smart Watch Series 5", "category": "Electronics",    "quantity": 2, "unit_price": 399.99, "discount_pct": 5 },
+
+        { "product_id": "PROD-207", "product_name": "Yoga Mat Premium",     "category": "Sports",         "quantity": 2, "unit_price": 149.99, "discount_pct": 5 }
+
+      ],
+
+      "shipping_cost": 19.99, "currency": "EUR", "payment_method": "Credit Card"
+
+    },
+
+    {
+
+      "order_id": "ORD-2024-010",
+
+      "order_date": "2024-07-09T11:45:00Z",
+
+      "status": "Delivered",
+
+      "channel": "Partner",
+
+      "customer": { "customer_id": "CUST-2187", "full_name": "Daniel Rosenthal", "segment": "Business", "region": "South", "city": "Miami", "country": "US" },
+
+      "sales_rep": { "rep_id": "REP-12", "name": "Lisa Chen" },
+
+      "line_items": [
+
+        { "product_id": "PROD-102", "product_name": "Office Chair Ergonomic", "category": "Furniture", "quantity": 10, "unit_price": 299.99, "discount_pct": 25 }
+
+      ],
+
+      "shipping_cost": 0, "currency": "USD", "payment_method": "Bank Transfer"
+
+    },
+
+    {
+
+      "order_id": "ORD-2024-011",
+
+      "order_date": "2024-09-30T17:00:00Z",
+
+      "status": "Processing",
+
+      "channel": "Online",
+
+      "customer": { "customer_id": "CUST-8891", "full_name": "Carlos Vega", "segment": "Standard", "region": "West", "city": "Los Angeles", "country": "US" },
+
+      "sales_rep": { "rep_id": "REP-07", "name": "James Holt" },
+
+      "line_items": [
+
+        { "product_id": "PROD-207", "product_name": "Yoga Mat Premium",    "category": "Sports",          "quantity": 1, "unit_price": 59.99, "discount_pct": 0 },
+
+        { "product_id": "PROD-415", "product_name": "Coffee Maker Deluxe", "category": "Home Appliances", "quantity": 1, "unit_price": 89.99, "discount_pct": 0 }
+
+      ],
+
+      "shipping_cost": 7.99, "currency": "USD", "payment_method": "PayPal"
+
+    },
+
+    {
+
+      "order_id": "ORD-2024-012",
+
+      "order_date": "2024-11-15T08:55:00Z",
+
+      "status": "Delivered",
+
+      "channel": "In-Store",
+
+      "customer": { "customer_id": "CUST-1042", "full_name": "Sarah Mitchell", "segment": "VIP", "region": "North", "city": "New York", "country": "US" },
+
+      "sales_rep": { "rep_id": "REP-12", "name": "Lisa Chen" },
+
+      "line_items": [
+
+        { "product_id": "PROD-416", "product_name": "Coffee Grinder Pro",   "category": "Home Appliances", "quantity": 1, "unit_price": 44.99, "discount_pct": 0 },
+
+        { "product_id": "PROD-214", "product_name": "Resistance Bands Set", "category": "Sports",          "quantity": 3, "unit_price": 24.99, "discount_pct": 0 }
+
+      ],
+
+      "shipping_cost": 0, "currency": "USD", "payment_method": "Credit Card"
+
+    }
+
+  ]
+
+}
+
+</code></pre></details></div>
+<div id="cleaning-stage" hidden><h3>Flatten and standardize</h3><ol><li>Parse JSON and compare metadata record_count with the actual order count.</li><li>Extract one order row and one row per nested line; assign line_number starting at 1 within each order.</li><li>Convert quantity, price and discount to Decimal for calculation. Missing or NULL discounts become zero; quantity is stored as an integer.</li><li>Calculate quantity × unit_price × (1 − discount_pct / 100). Store revenue at six decimal places.</li><li>Use the source currency to choose USD 1.00 or EUR 1.08, then calculate USD revenue.</li><li>Keep category_raw and a standardized category. Load flattened records into orders and order_lines.</li></ol>
+<div class="table-wrap"><table><thead><tr><th>Source issue</th><th>Affected record</th><th>Handling</th></tr></thead><tbody><tr><td>home appliances</td><td>ORD-2024-006 / PROD-416</td><td>Normalize to Home Appliances; preserve raw text.</td></tr><tr><td>Sports versus Sports &amp; Fitness</td><td>PROD-207: orders 003, 009, 011; PROD-214: 003, 012</td><td>Standardize to Sports &amp; Fitness.</td></tr><tr><td>Yoga Mat price €149.99 versus $59.99 elsewhere</td><td>ORD-2024-009 / PROD-207</td><td>Flag and retain; do not guess a corrected price.</td></tr></tbody></table></div>
+<p>Cancelled, Returned and Processing rows are retained. Their exclusion happens in reporting, not by deleting source rows. Shipping stays at order level. Sarah's Premium → VIP change is treated as customer history.</p>
+<p>The current checks cover metadata, fixed dataset counts and final delivered revenue. This is not a general-purpose data validator; essential missing fields or unsupported currencies cause the run to fail rather than being silently filled.</p>
+<p><a href="https://github.com/robertjohn9sk/data_test_global_e/blob/main/src/pipeline.py">Read the executable pipeline</a> · <a href="https://github.com/robertjohn9sk/data_test_global_e/blob/main/data/output/data_quality_log.csv">Read the quality log</a></p></div>
+<div id="gold-stage" hidden><h3>Prepare data for reporting</h3><p>The gold layer means the reporting-ready star schema and aggregated report outputs. The implementation builds these tables in the same DuckDB database.</p><ol><li>Build dim_product from product IDs and standardized attributes.</li><li>Build dim_date from observed order dates in UTC, with year and month attributes.</li><li>Build dim_customer with customer_key, effective_from, effective_to and is_current. Keep Sarah's Premium and VIP versions.</li><li>Join orders and lines to the dimensions. Select the customer version where order date ≥ effective_from and order date &lt; effective_to.</li><li>Create fact_sales with one row per (order_id, line_number), dimension keys, status, channel, quantities, discounts and USD amounts.</li><li>Run the four SQL reports with status = 'Delivered', export their CSVs, validate total revenue, then refresh public/data for the website.</li></ol>
+<div class="table-wrap"><table><thead><tr><th>Dashboard metric</th><th>Calculation</th><th>Result</th></tr></thead><tbody><tr><td>Delivered revenue</td><td>SUM(line_revenue_usd) for Delivered</td><td>9,994.624060 USD → $9,994.62</td></tr><tr><td>Delivered orders</td><td>COUNT(DISTINCT order_id) for Delivered</td><td>9</td></tr><tr><td>Average order value</td><td>Unrounded delivered revenue / delivered orders</td><td>$1,110.51</td></tr><tr><td>Monthly trend</td><td>Group delivered revenue by year-month</td><td>7 SQL rows; empty months shown as zero in the chart</td></tr><tr><td>Product share</td><td>100 × product revenue / window grand total</td><td>8 products</td></tr><tr><td>Segment and channel</td><td>Group revenue using historical customer segment and channel</td><td>5 combinations</td></tr><tr><td>Customer leaderboard</td><td>Distinct delivered orders, revenue and RANK by revenue</td><td>6 customers</td></tr></tbody></table></div>
+<p>Totals use unrounded fact values; report CSVs round to cents. Adding rounded report rows can differ slightly from rounding the overall total. No shipping or inferred refund transactions are included.</p>
+<p><a href="https://github.com/robertjohn9sk/data_test_global_e/blob/main/docs/star_schema.md">Model diagram</a> · <a href="https://github.com/robertjohn9sk/data_test_global_e/blob/main/sql/reporting_queries.sql">Four SQL queries</a> · <a href="https://github.com/robertjohn9sk/data_test_global_e/tree/main/data/output">Prepared tables and results</a></p></div></section><section id="tests-view" hidden class="explanation panel"><p class="eyebrow">Source-to-report verification</p><h2>Test cases and validation</h2><p>75 checks passed against the supplied assessment data. These are saved execution results, not tests running in your browser.</p><pre><code>python src/pipeline.py
+python src/validate.py</code></pre><div class="table-wrap"><table><thead><tr><th>Test area</th><th>What is compared</th><th>Expected result</th></tr></thead><tbody><tr><td>JSON parsing</td><td>Metadata count, unique source IDs and loaded order count</td><td>12 orders</td></tr><tr><td>Nested extraction</td><td>Source line count, order_lines and fact_sales; unique line keys</td><td>20 rows each; no duplicates</td></tr><tr><td>Source values</td><td>Each order's status/channel/customer/currency/shipping; each line's product, quantity, price, discount and raw category</td><td>Exact match</td></tr><tr><td>Revenue and FX</td><td>Independently recompute every source line using Decimal and USD 1.00 / EUR 1.08</td><td>Matches local, USD and fact revenue</td></tr><tr><td>Status handling</td><td>Delivered total and retention of non-delivered lines</td><td>9,994.624060 USD; 5 non-delivered lines retained</td></tr><tr><td>Dimension joins</td><td>Missing customer, product or date references</td><td>Zero missing references</td></tr><tr><td>Customer history</td><td>Sarah's order-time segment mappings</td><td>001/004 Premium; 012 VIP</td></tr><tr><td>Cleaning decisions</td><td>Canonical categories and flagged Yoga Mat price</td><td>Home Appliances; Sports &amp; Fitness; €149.99 retained</td></tr><tr><td>Reporting SQL</td><td>Execute all four standalone queries and compare exported rows</td><td>Exact matches; 7 / 8 / 5 / 6 rows</td></tr><tr><td>Website consistency</td><td>Public CSVs versus pipeline output CSVs</td><td>Byte-for-byte match</td></tr><tr><td>Source preservation</td><td>Raw JSON SHA-256 before and after validation</td><td>Unchanged during validation</td></tr></tbody></table></div><p><a href="https://github.com/robertjohn9sk/data_test_global_e/blob/main/src/validate.py">Executable test script</a> · <a href="https://github.com/robertjohn9sk/data_test_global_e/blob/main/docs/validation_results.json">Saved test results</a> · <a href="https://github.com/robertjohn9sk/data_test_global_e/blob/main/docs/pipeline_architecture.md">Pipeline diagram</a></p><h3>What passing means</h3><p>The checks show the warehouse faithfully represents the supplied JSON and applies the documented logic. They cannot prove that source prices or customer details are correct in the real world. The unusual price remains a review item.</p><h3>Manual and additional checks</h3><p>Read the assessment Word document against the deliverables. Inspect all four dashboard reports and CSV downloads, switch each tab, check a small screen, and capture a screenshot. Full browser visual verification remains outstanding. The supplied dataset contains zero and positive discounts but no NULL discounts; synthetic NULL/missing-discount cases and malformed-input tests are future coverage, not claimed passes. General customer-history reversions, incremental loading and duplicate customer names also require additional tests before extending the dataset.</p></section>    <footer><span>Source of truth: local DuckDB warehouse</span><a href="https://github.com/robertjohn9sk/data_test_global_e">Repository</a></footer>
   </main><script src="app.js"></script><script src="dashboard.js"></script>
 <script src="navigation.js"></script></body></html>

@@ -1,4 +1,6 @@
-# Retail BI Developer Assessment
+# Global-e Data Check
+
+**Robert Grosu · BI Developer Technical Assessment**
 
 [Open the dashboard](https://bitestgloabe.netlify.app/) · [SQL queries](sql/reporting_queries.sql) · [Data model](docs/star_schema.md) · [Results](data/output/reports/)
 
@@ -102,3 +104,16 @@ I used **Codex and ChatGPT** for project setup, Python and SQL implementation su
 The pipeline, four SQL comparisons, JavaScript syntax, dashboard rendering logic, and view-switching logic were checked. Full browser visual verification and a new screenshot remain outstanding. The customer history implementation covers the observed segment change; more general attribute changes and repeated segment reversions need additional handling.
 
 **Before submission:** add the ChatGPT shared conversation link and any available Codex session link here. These links have not yet been supplied.
+
+## Pipeline walkthrough and tests
+
+Use the website's **Pipeline** tab for source files, requirements, cleaning and gold-layer logic. Use **Tests** to understand the checks and their limits.
+
+- [Pipeline architecture diagram](docs/pipeline_architecture.md)
+- [Executable validation](src/validate.py)
+- [Saved results: 75 checks passed](docs/validation_results.json)
+
+```bash
+python src/pipeline.py
+python src/validate.py
+```
