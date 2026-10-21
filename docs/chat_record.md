@@ -159,3 +159,13 @@ Added Tests as the fourth main view. Created src/validate.py and executed it suc
 ## 9. Project title and author
 
 The candidate asked to add their name and the title Global-e Data Check to the project and page. Updated the page heading, browser title and README to Global-e Data Check, with Robert Grosu as the candidate name based on the supplied project context.
+
+## 10. GPT Chat tab
+
+**Candidate request — quotation**
+
+> add a 5th tab in the app to show the my instructions to you , called gpt chat
+
+**Assistant work — summary**
+
+Added GPT Chat as the fifth main navigation view. It presents 15 selected instruction excerpts in conversation order, identifies omissions from longer messages, links to this record, and distinguishes the earlier candidate-provided Codex handoff from a retrieved transcript. The tab uses the existing generic view-switching script. Navigation target presence was checked; a full browser visual check was not performed.
